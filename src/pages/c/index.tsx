@@ -1,11 +1,13 @@
 interface Props {
   data: number;
 }
-export default function Example({ data }: Props) {
+
+export default function CComp({ data }: Props) {
   return (
     <div>
-      <h1>getStaticProps</h1>
-      <div>{`data : ${data}`}</div>
+      this is C component
+      <hr />
+      <h1>{`SetTimeout Data : ${data}`}</h1>
     </div>
   );
 }
