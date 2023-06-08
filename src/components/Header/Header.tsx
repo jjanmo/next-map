@@ -8,10 +8,16 @@ export default function Header() {
   const { pathname } = useRouter();
 
   return (
-    <div className="w-full h-24 flex justify-between items-center bg-blue-100">
-      <div className="relative w-24 h-24 ml-4">
-        <Link href="/">
-          <Image src={'/cute.png'} alt="logo" fill />
+    <div className="w-full h-24 flex justify-between items-center fixed top-0 left-0 z-10">
+      <div className="relative w-24 h-24 ml-4 flex">
+        <Link href="/" className="flex justify-center items-center">
+          <Image
+            src={'/nav-icon.png'}
+            alt="logo"
+            width={80}
+            height={80}
+            priority
+          />
         </Link>
       </div>
 

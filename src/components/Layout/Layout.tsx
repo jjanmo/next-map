@@ -4,7 +4,7 @@ interface Props {
 }
 export default function Layout({ children }: Props) {
   return (
-    <div className="w-full max-w-lg h-screen m-auto bg-slate-100">
+    <div className="w-full h-screen m-auto">
       <Header />
       {children}
     </div>
