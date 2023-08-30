@@ -9,7 +9,6 @@ interface Props {
 }
 
 export default function Home({ stores }: Props) {
-  console.log(stores);
   return (
     <Layout>
       <main style={{ width: '100%', height: '100%' }}>
