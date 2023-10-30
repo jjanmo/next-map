@@ -10,6 +10,7 @@ export default function Counter() {
   return (
     <div>
       <div>{count}</div>
+      <div>{count}</div>
       <button onClick={handleButtonClick}>+</button>
     </div>
   );
