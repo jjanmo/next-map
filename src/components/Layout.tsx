@@ -1,6 +1,6 @@
-import Header from '@components/Header';
+import Header from '@components/Header'
 interface Props {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 export default function Layout({ children }: Props) {
   return (
@@ -8,5 +8,5 @@ export default function Layout({ children }: Props) {
       <Header />
       {children}
     </div>
-  );
+  )
 }

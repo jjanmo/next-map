@@ -1,5 +1,5 @@
 interface Props {
-  size: number;
+  size: number
 }
 export default function Spinner({ size }: Props) {
   return (
@@ -179,5 +179,5 @@ export default function Spinner({ size }: Props) {
         </circle>
       </g>
     </svg>
-  );
+  )
 }
