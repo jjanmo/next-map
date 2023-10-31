@@ -2,17 +2,21 @@
 
 echo "Pushed"
 
-current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
+# current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
+
+current_branch=$(git rev-parse --abbrev-ref HEAD)
 
 if [ "$current_branch" == "main" ] || [ "$current_branch" == "master" ]
 then
-    read -p "You can't push directly to main branch as a rule, is that what you intended? [y|n] " -n 1 -r < /dev/tty
+    read -p "You can't push directly to main branch as a rule, is that what you intended? [y|N] " -n 1 -r < /dev/tty 
     echo
-    if echo $REPLY | grep -E '^[Yy]$' > /dev/null
+    if [[ "$REPLY" =~ ^[Yy]$ ]]; # y를 입력하면 PUSH 실행(execute)
     then
-        exit 0 # push will execute
+        exit 0 
     fi
-    exit 1 # push will not execute
+    exit 1 # 그외(N을 입력 or 엔터 or ...)를 입력하면 PUSH 실행안함
+
+# main / master 외의 브랜치로 푸쉬하는 경우 PUSH 실행(execute)
 else
-    exit 0 # push will execute
+    exit 0 
 fi
