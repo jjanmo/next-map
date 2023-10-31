@@ -11,6 +11,8 @@ const Counter = () => {
     <section>
       <div>Counter</div>
       <h1>{count}</h1>
+      <h2>{count}</h2>
+      <h3>{count}</h3>
       <button onClick={handleClick}></button>
     </section>
   )
