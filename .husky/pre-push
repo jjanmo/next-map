@@ -4,6 +4,8 @@ echo "Pushed"
 
 current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
 
+echo $current_branch
+
 if [ "$current_branch" == "main" ] || [ "$current_branch" == "master" ]
 then
     read -p "You can't push directly to main branch as a rule, is that what you intended? [y|n] " -n 1 -r < /dev/tty
