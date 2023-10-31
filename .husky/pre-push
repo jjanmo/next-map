@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+
+echo "Pushed"
+
+FORBIDDEN_HTTPS_URL="https://github.com/Soomgo-Frontend/soomgo.com.git" # 리모트 URL(HTTPS)
+FORBIDDEN_SSH_URL="git@github.com:Soomgo-Frontend/soomgo.com.git" # 리모트 URL(SSH)
+FORBIDDEN_REF="refs/heads/master" # main(master) branch ref
+​
+# Git Hook Script에서 사용되는 정보를 제공
+# HUSKY_GIT_STDIN : Git Hook script가 실행될 때, Git 명령의 표준입력에서 읽은 정보
+ARR_GIT_STDIN=($(echo $HUSKY_GIT_STDIN))
+​
+# local_ref=${ARR_GIT_STDIN[0]} # 로컬브랜치의 이름
+# local_sha=${ARR_GIT_STDIN[1]} # 로컬브랜치의 최신 커밋 해시
+remote_ref=${ARR_GIT_STDIN[2]} # 리모트브랜치 이름
+# remote_sha=${ARR_GIT_STDIN[3]} # 리모드브랜치 최신 커밋 해시
+​
+if [ "$remote_ref" == "$FORBIDDEN_REF" ]
+then
+    echo "You can't push directly to main branch"
+    exit 1 
+fi
+
+. "$(dirname -- "$0")/_/husky.sh"
