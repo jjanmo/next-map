@@ -1,8 +1,9 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import usePosition from '@hooks/usePosition'
 
 export default function Map() {
   const { position } = usePosition()
+  const map = useRef<naver.maps.Map>()
 
   useEffect(() => {
     if (!position) return
@@ -15,7 +16,11 @@ export default function Map() {
       zoomControl: false,
     }
 
-    new naver.maps.Map('map', mapOptions)
+    map.current = new naver.maps.Map('map', mapOptions)
+
+    return () => {
+      map.current?.destroy()
+    }
   }, [position])
 
   return <div id="map" style={{ height: '100%' }}></div>
