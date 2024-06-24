@@ -9,7 +9,7 @@ export default function Map() {
     if (!position) return
 
     const { latitude, longitude } = position
-    const location = new window.naver.maps.LatLng(latitude, longitude)
+    const location = new naver.maps.LatLng(latitude, longitude)
     const mapOptions: naver.maps.MapOptions = {
       center: location,
       zoom: 17,
