@@ -1,9 +1,16 @@
 import { useEffect, useRef } from 'react'
 import usePosition from '@hooks/usePosition'
+import useMap from '@hooks/useMap'
+import Spinner from './Spinner'
 
-export default function Map() {
-  const { position } = usePosition()
+interface Props {
+  isLoading: boolean
+}
+
+export default function Map({ isLoading }: Props) {
   const map = useRef<naver.maps.Map>()
+  const { position } = usePosition()
+  const { initializeMap } = useMap()
 
   useEffect(() => {
     if (!position) return
@@ -17,11 +24,21 @@ export default function Map() {
     }
 
     map.current = new naver.maps.Map('map', mapOptions)
+    initializeMap(map.current)
 
     return () => {
       map.current?.destroy()
     }
-  }, [position])
+  }, [position, initializeMap])
 
-  return <div id="map" style={{ height: '100%' }}></div>
+  return (
+    <>
+      {isLoading && (
+        <div className="w-full h-full flex justify-center items-center absolute top-0 left-0 z-10">
+          <Spinner size={100} />
+        </div>
+      )}
+      <div id="map" style={{ height: '100%' }}></div>
+    </>
+  )
 }

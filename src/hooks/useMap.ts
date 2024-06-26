@@ -1,7 +1,13 @@
-export const INITIAL_POSITION_LAT = 37.3595704
-export const INITIAL_POSITION_LNG = 127.105399
-export const INITIAL_ZOOM = 10
+import { useCallback } from 'react'
+import { swrKey } from '@constants/swr'
+import { mutate } from 'swr'
 
 export default function useMap() {
-  return {}
+  const initializeMap = useCallback((map: naver.maps.Map) => {
+    mutate(swrKey.map, map)
+  }, [])
+
+  return {
+    initializeMap,
+  }
 }
