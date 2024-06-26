@@ -1,7 +1,7 @@
-import { Store } from '@/types/store'
 import { useCallback } from 'react'
-import { swrKey } from 'src/constants/swr'
 import { mutate } from 'swr'
+import { Store } from '@/types/store'
+import { swrKey } from '@constants/swr'
 
 export default function useStores() {
   const initializeStores = useCallback((data: Store[]) => {

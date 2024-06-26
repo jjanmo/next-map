@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { INITIAL_POSITION_LAT, INITIAL_POSITION_LNG } from './useMap'
+import { INITIAL_POSITION_LAT, INITIAL_POSITION_LNG } from '@constants/map'
 
 type Position = {
   latitude: number

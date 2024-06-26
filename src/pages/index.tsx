@@ -1,9 +1,9 @@
 import Layout from '@components/Layout'
 import { Store } from '@/types/store'
 import axios from 'axios'
-import Map from '@components/Map'
 import useStores from '@hooks/useStores'
 import { useEffect } from 'react'
+import MapSection from '@components/MapSection'
 
 interface Props {
   stores: Store[]
@@ -18,8 +18,8 @@ export default function Home({ stores }: Props) {
 
   return (
     <Layout>
-      <main style={{ width: '100%', height: '100%' }}>
-        <Map />
+      <main className="w-full h-full ">
+        <MapSection />
       </main>
     </Layout>
   )
