@@ -19,7 +19,7 @@ export default function Map({ isLoading }: Props) {
     const location = new naver.maps.LatLng(latitude, longitude)
     const mapOptions: naver.maps.MapOptions = {
       center: location,
-      zoom: 17,
+      zoom: 14,
       zoomControl: false,
     }
 
