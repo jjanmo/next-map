@@ -1,3 +1,11 @@
 export const INITIAL_POSITION_LAT = 37.3595704
 export const INITIAL_POSITION_LNG = 127.105399
 export const INITIAL_ZOOM = 10
+
+export const MARKER_WIDTH = 54
+export const MARKER_HEIGHT = 64
+export const NUMBER_OF_MARKERS = 13
+export const SCALE = 2 / 3
+
+export const SCALED_MARKER_WIDTH = MARKER_WIDTH * SCALE
+export const SCALED_MARKER_HEIGHT = MARKER_HEIGHT * SCALE
