@@ -5,9 +5,10 @@ import Spinner from './Spinner'
 
 interface Props {
   isLoading: boolean
+  clearCurrentStore: () => void
 }
 
-export default function Map({ isLoading }: Props) {
+export default function Map({ isLoading, clearCurrentStore }: Props) {
   const map = useRef<naver.maps.Map>()
   const { position } = usePosition()
   const { initializeMap } = useMap()
@@ -26,10 +27,12 @@ export default function Map({ isLoading }: Props) {
     map.current = new naver.maps.Map('map', mapOptions)
     initializeMap(map.current)
 
+    naver.maps.Event.addListener(map.current, 'click', clearCurrentStore)
+
     return () => {
       map.current?.destroy()
     }
-  }, [position, initializeMap])
+  }, [position, initializeMap, clearCurrentStore])
 
   return (
     <>
