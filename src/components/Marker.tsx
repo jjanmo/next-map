@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 interface Icon {
   url: string
@@ -12,18 +12,25 @@ interface Props {
   lat: number
   lng: number
   icon: Icon
+  onClick: () => void
 }
 
-export default function Marker({ map, lat, lng, icon }: Props) {
+export default function Marker({ map, lat, lng, icon, onClick }: Props) {
+  const marker = useRef<naver.maps.Marker | null>(null)
+
   useEffect(() => {
     if (map) {
-      new naver.maps.Marker({
+      marker.current = new naver.maps.Marker({
         position: new naver.maps.LatLng(lat, lng),
         map,
         icon,
       })
     }
-  }, [map, lat, lng, icon])
+
+    if (marker.current) {
+      naver.maps.Event.addListener(marker.current, 'click', onClick)
+    }
+  }, [map, lat, lng, icon, onClick])
 
   return null
 }
