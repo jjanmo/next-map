@@ -3,44 +3,33 @@ import Map from './Map'
 import { swrKey } from '@constants/swr'
 import { Store } from '@/types/store'
 import Marker from './Marker'
-import { generateStoreMarkerImage } from 'src/utils'
 import useStore from '@hooks/useStore'
-import { useCallback } from 'react'
 
 export default function MapSection() {
   const { data: stores } = useSWR<Store[]>(swrKey.stores)
   const { data: map } = useSWR<naver.maps.Map>(swrKey.map)
   const { data: currentStore } = useSWR<Store>(swrKey.currentStore)
 
-  const { setCurrentStore } = useStore()
-
-  const handleStoreClick = useCallback(
-    (store: Store) => () => {
-      setCurrentStore(store)
-    },
-    [setCurrentStore]
-  )
+  const { setCurrentStore, clearCurrentStore } = useStore()
 
   return (
     <>
-      <Map isLoading={!map} />
+      <Map isLoading={!map} clearCurrentStore={clearCurrentStore} />
       {map &&
         stores &&
         stores.map((store) => {
-          const { nid, coordinates, season } = store
-          const isSelected = currentStore?.nid === nid
-
           return (
             <Marker
-              key={nid}
+              key={store.nid}
+              store={store}
               map={map}
-              lat={coordinates[0]}
-              lng={coordinates[1]}
-              icon={generateStoreMarkerImage(season, isSelected)}
-              onClick={handleStoreClick(store)}
+              onClick={() => setCurrentStore(store)}
             />
           )
         })}
+      {map && currentStore && (
+        <Marker store={currentStore} map={map} onClick={clearCurrentStore} isSelected />
+      )}
     </>
   )
 }

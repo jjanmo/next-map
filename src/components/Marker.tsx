@@ -1,36 +1,33 @@
+import { Store } from '@/types/store'
 import { useEffect, useRef } from 'react'
-
-interface Icon {
-  url: string
-  size: naver.maps.Size
-  origin: naver.maps.Point
-  scaledSize: naver.maps.Size
-}
+import { generateStoreMarkerImage } from 'src/utils'
 
 interface Props {
   map: naver.maps.Map
-  lat: number
-  lng: number
-  icon: Icon
+  store: Store
   onClick: () => void
+  isSelected?: boolean
 }
 
-export default function Marker({ map, lat, lng, icon, onClick }: Props) {
+export default function Marker({ map, store, onClick, isSelected }: Props) {
   const marker = useRef<naver.maps.Marker | null>(null)
+
+  const { coordinates, season } = store
+  const [lat, lng] = coordinates
 
   useEffect(() => {
     if (map) {
       marker.current = new naver.maps.Marker({
         position: new naver.maps.LatLng(lat, lng),
         map,
-        icon,
+        icon: generateStoreMarkerImage(season, isSelected ?? false),
       })
     }
 
     if (marker.current) {
       naver.maps.Event.addListener(marker.current, 'click', onClick)
     }
-  }, [map, lat, lng, icon, onClick])
+  }, [isSelected, lat, lng, map, onClick, season])
 
   return null
 }

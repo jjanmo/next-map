@@ -8,7 +8,12 @@ export default function useStore() {
     mutate(swrKey.currentStore, data)
   }, [])
 
+  const clearCurrentStore = useCallback(() => {
+    mutate(swrKey.currentStore, null)
+  }, [])
+
   return {
     setCurrentStore,
+    clearCurrentStore,
   }
 }
