@@ -17,7 +17,9 @@ export default function Header() {
 
       {pathname === '/' && (
         <div className="flex">
-          <BsShare size="45" color="white" className="p-3 mx-1 rounded-xl bg-blue-300 " />
+          <button>
+            <BsShare size="45" color="white" className="p-3 mx-1 rounded-xl bg-blue-300 " />
+          </button>
           <Link href="feedback">
             <VscFeedback size="45" color="white" className="p-3 ml-1 mr-4 rounded-xl bg-blue-300" />
           </Link>
