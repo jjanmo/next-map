@@ -1,6 +1,11 @@
-export const INITIAL_POSITION_LAT = 37.3595704
-export const INITIAL_POSITION_LNG = 127.105399
-export const INITIAL_ZOOM = 10
+/** 서울 중앙 좌표 */
+export const INITIAL_POSITION = {
+  LAT: 37.5666103,
+  LNG: 126.9783882,
+}
+
+/** 초기 줌 레벨 */
+export const INITIAL_ZOOM = 16
 
 export const MARKER_WIDTH = 54
 export const MARKER_HEIGHT = 64

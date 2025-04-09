@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { swrKey } from '@constants/swr'
 import { mutate } from 'swr'
 import usePosition from './usePosition'
+import { INITIAL_ZOOM } from '@constants/map'
 
 interface Params {
   handler: () => void
@@ -18,7 +19,7 @@ export default function useMap({ handler }: Params) {
     const location = new naver.maps.LatLng(latitude, longitude)
     const mapOptions: naver.maps.MapOptions = {
       center: location,
-      zoom: 14,
+      zoom: INITIAL_ZOOM,
       zoomControl: false,
     }
 
