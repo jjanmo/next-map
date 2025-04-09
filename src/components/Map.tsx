@@ -1,5 +1,3 @@
-import { useEffect, useRef } from 'react'
-import usePosition from '@hooks/usePosition'
 import useMap from '@hooks/useMap'
 import Spinner from './Spinner'
 
@@ -9,30 +7,7 @@ interface Props {
 }
 
 export default function Map({ isLoading, clearCurrentStore }: Props) {
-  const map = useRef<naver.maps.Map>()
-  const { position } = usePosition()
-  const { initializeMap } = useMap()
-
-  useEffect(() => {
-    if (!position) return
-
-    const { latitude, longitude } = position
-    const location = new naver.maps.LatLng(latitude, longitude)
-    const mapOptions: naver.maps.MapOptions = {
-      center: location,
-      zoom: 14,
-      zoomControl: false,
-    }
-
-    map.current = new naver.maps.Map('map', mapOptions)
-    initializeMap(map.current)
-
-    naver.maps.Event.addListener(map.current, 'click', clearCurrentStore)
-
-    return () => {
-      map.current?.destroy()
-    }
-  }, [position, initializeMap, clearCurrentStore])
+  useMap({ handler: clearCurrentStore })
 
   return (
     <>
