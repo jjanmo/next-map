@@ -1,4 +1,6 @@
+import { useEffect } from 'react'
 import useMap from '@hooks/useMap'
+import usePosition from '@hooks/usePosition'
 import Spinner from './Spinner'
 
 interface Props {
@@ -7,7 +9,14 @@ interface Props {
 }
 
 export default function Map({ isLoading, clearCurrentStore }: Props) {
-  useMap({ handler: clearCurrentStore })
+  const { position } = usePosition()
+  const { initializeMap } = useMap()
+
+  useEffect(() => {
+    if (!position) return
+
+    initializeMap({ position, handler: clearCurrentStore })
+  }, [position, clearCurrentStore, initializeMap])
 
   return (
     <>
