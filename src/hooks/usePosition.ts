@@ -1,5 +1,5 @@
+import { INITIAL_POSITION } from '@constants/map'
 import { useEffect, useState } from 'react'
-import { INITIAL_POSITION_LAT, INITIAL_POSITION_LNG } from '@constants/map'
 
 type Position = {
   latitude: number
@@ -9,11 +9,13 @@ type Position = {
 export default function usePosition() {
   const [position, setPosition] = useState<Position>()
 
+  //@TODO 쿼리에 포지션 값이 있다면 전달하는 로직 추가
+
   useEffect(() => {
     if (!('geolocation' in navigator)) {
       setPosition({
-        latitude: INITIAL_POSITION_LAT,
-        longitude: INITIAL_POSITION_LNG,
+        latitude: INITIAL_POSITION.LAT,
+        longitude: INITIAL_POSITION.LNG,
       })
       return
     }

@@ -16,7 +16,7 @@ export default function Header() {
       toast.error('공유할 맛집을 선택해주세요')
       return
     }
-    //@TODO
+    //@TODO 현재 중앙 좌표를 쿼리로 전달하는 URL 생성
     toast.success('링크가 복사되었어요')
   }
 
