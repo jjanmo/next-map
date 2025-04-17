@@ -1,9 +1,10 @@
-import Layout from '@components/Layout'
 import { Store } from '@/types/store'
 import axios from 'axios'
 import useStores from '@hooks/useStores'
 import { useEffect } from 'react'
 import MapSection from '@components/MapSection'
+import Sidebar from '@components/Sidebar'
+import Drawer from '@components/Drawer'
 
 interface Props {
   stores: Store[]
@@ -17,11 +18,13 @@ export default function Home({ stores }: Props) {
   }, [initializeStores, stores])
 
   return (
-    <Layout>
+    <div className="relative w-screen h-screen bg-slate-100">
+      <Sidebar />
+      <Drawer>상세 정보</Drawer>
       <main className="w-full h-full ">
         <MapSection />
       </main>
-    </Layout>
+    </div>
   )
 }
 
