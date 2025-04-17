@@ -1,26 +1,28 @@
+import { swrKey } from '@constants/swr'
 import useMap from '@hooks/useMap'
 import Image from 'next/image'
 import Link from 'next/link'
 import { BsShare } from 'react-icons/bs'
 import { VscFeedback } from 'react-icons/vsc'
 import { toast } from 'react-toastify'
+import useSWR from 'swr'
 
 export default function Sidebar() {
+  const { data: map } = useSWR<naver.maps.Map>(swrKey.map)
   const { getMapOption, resetMap } = useMap()
 
   const handleLogoClick = () => {
-    console.log('handleLogoClick')
-    resetMap()
+    if (!map) return
+
+    resetMap(map)
   }
 
   const handleShareBtnClick = () => {
-    const option = getMapOption()
+    if (!map) return
 
-    console.log(option)
-
-    //@TODO 현재 중앙 좌표를 쿼리로 전달하는 URL 생성
-    // const url = `https://map.naver.com/v5/search/${latitude},${longitude},${zoom}`
-    // navigator.clipboard.writeText(url)
+    const { latitude, longitude, zoom } = getMapOption(map)
+    const url = `https://map.naver.com/v5/search?lat=${latitude}&lng=${longitude}&zoom=${zoom}`
+    navigator.clipboard.writeText(url)
     toast.success('링크가 복사되었어요')
   }
 
