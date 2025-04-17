@@ -1,19 +1,15 @@
-import { useCallback, useRef } from 'react'
+import { useCallback } from 'react'
 import { swrKey } from '@constants/swr'
 import { mutate } from 'swr'
-import { INITIAL_ZOOM } from '@constants/map'
+import { INITIAL_ZOOM, INITIAL_POSITION } from '@constants/map'
 
-interface Params {
-  position: {
-    latitude: number
-    longitude: number
-  }
-  handler: () => void
+type Position = {
+  latitude: number
+  longitude: number
 }
+type Params = { position: Position; handler: () => void }
 
 export default function useMap() {
-  const map = useRef<naver.maps.Map>()
-
   const initializeMap = useCallback(({ position, handler }: Params) => {
     const { latitude, longitude } = position
     const location = new naver.maps.LatLng(latitude, longitude)
@@ -22,12 +18,36 @@ export default function useMap() {
       zoom: INITIAL_ZOOM,
       zoomControl: false,
     }
-    map.current = new naver.maps.Map('map', mapOptions)
-    map.current?.addListener('click', handler)
-    mutate(swrKey.map, map.current)
+
+    const map = new naver.maps.Map('map', mapOptions)
+    map.addListener('click', handler)
+    mutate(swrKey.map, map)
+  }, [])
+
+  const getMapOption = useCallback((map: naver.maps.Map) => {
+    if (!map) {
+      return { latitude: INITIAL_POSITION.LAT, longitude: INITIAL_POSITION.LNG, zoom: INITIAL_ZOOM }
+    }
+
+    const center = map.getCenter()
+    const zoom = map.getZoom()
+
+    return {
+      latitude: center.x,
+      longitude: center.y,
+      zoom,
+    }
+  }, [])
+
+  const resetMap = useCallback((map: naver.maps.Map) => {
+    if (!map) return
+
+    map.morph(new naver.maps.LatLng(INITIAL_POSITION.LAT, INITIAL_POSITION.LNG), INITIAL_ZOOM)
   }, [])
 
   return {
     initializeMap,
+    getMapOption,
+    resetMap,
   }
 }

@@ -2,7 +2,7 @@ import { FC, PropsWithChildren, useState } from 'react'
 import { FiArrowRight } from 'react-icons/fi'
 
 const Drawer: FC<PropsWithChildren> = ({ children }) => {
-  const [isActive, setIsActive] = useState(true)
+  const [isActive, setIsActive] = useState(false)
 
   const classes = {
     active:
