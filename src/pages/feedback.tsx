@@ -1,5 +1,3 @@
-import Layout from '@components/Layout'
-
 export default function Feedback() {
-  return <Layout>This is Feedback page 🔥</Layout>
+  return <div>This is Feedback page 🔥</div>
 }
