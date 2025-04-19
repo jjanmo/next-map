@@ -7,16 +7,15 @@ type Position = {
   latitude: number
   longitude: number
 }
-type Params = { position: Position; handler: () => void }
+type Params = { position: Position; zoom: number; handler: () => void }
 
 export default function useMap() {
-  const initializeMap = useCallback(({ position, handler }: Params) => {
+  const initializeMap = useCallback(({ position, zoom, handler }: Params) => {
     const { latitude, longitude } = position
     const location = new naver.maps.LatLng(latitude, longitude)
     const mapOptions: naver.maps.MapOptions = {
       center: location,
-      zoom: INITIAL_ZOOM,
-      zoomControl: false,
+      zoom,
     }
 
     const map = new naver.maps.Map('map', mapOptions)
@@ -30,7 +29,7 @@ export default function useMap() {
     }
 
     const center = map.getCenter()
-    const latLng = new naver.maps.LatLng(center.y, center.x)
+    const latLng = new naver.maps.LatLng(center.y, center.x) // getCenter의 리턴타입 : PointObjectLiteral → naver.maps.LatLng 를 사용하여 타입변환 필요
     const zoom = map.getZoom()
 
     return {

@@ -9,14 +9,14 @@ interface Props {
 }
 
 export default function Map({ isLoading, clearCurrentStore }: Props) {
-  const { position } = usePosition()
+  const { position, zoom } = usePosition()
   const { initializeMap } = useMap()
 
   useEffect(() => {
     if (!position) return
 
-    initializeMap({ position, handler: clearCurrentStore })
-  }, [position, clearCurrentStore, initializeMap])
+    initializeMap({ position, zoom, handler: clearCurrentStore })
+  }, [position, zoom, clearCurrentStore, initializeMap])
 
   return (
     <>

@@ -21,7 +21,7 @@ export default function Sidebar() {
     if (!map) return
 
     const { latitude, longitude, zoom } = getMapOption(map)
-    const url = `https://map.naver.com/v5/search?lat=${latitude}&lng=${longitude}&zoom=${zoom}`
+    const url = `${location.origin}?lat=${latitude}&lng=${longitude}&zoom=${zoom}`
     navigator.clipboard.writeText(url)
     toast.success('링크가 복사되었어요')
   }

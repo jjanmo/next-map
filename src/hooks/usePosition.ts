@@ -1,4 +1,5 @@
-import { INITIAL_POSITION } from '@constants/map'
+import { INITIAL_POSITION, INITIAL_ZOOM } from '@constants/map'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 type Position = {
@@ -6,10 +7,17 @@ type Position = {
   longitude: number
 }
 
+/**
+ * @description 위치 정보를 가져오는 훅
+ * @returns 위도, 경도, 줌 레벨
+ */
 export default function usePosition() {
+  const router = useRouter()
+  const { lat, lng, zoom } = router.query
+
   const [position, setPosition] = useState<Position>()
 
-  //@TODO 쿼리에 포지션 값이 있다면 전달하는 로직 추가
+  const _zoom = Number(zoom) || INITIAL_ZOOM
 
   useEffect(() => {
     if (!('geolocation' in navigator)) {
@@ -21,12 +29,15 @@ export default function usePosition() {
     }
 
     navigator.geolocation.getCurrentPosition((position) => {
+      const latitude = lat ? Number(lat) : position.coords.latitude
+      const longitude = lng ? Number(lng) : position.coords.longitude
+
       setPosition({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
+        latitude,
+        longitude,
       })
     })
-  }, [])
+  }, [lat, lng])
 
-  return { position }
+  return { position, zoom: _zoom }
 }
