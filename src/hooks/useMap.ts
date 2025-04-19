@@ -30,11 +30,12 @@ export default function useMap() {
     }
 
     const center = map.getCenter()
+    const latLng = new naver.maps.LatLng(center.y, center.x)
     const zoom = map.getZoom()
 
     return {
-      latitude: center.x,
-      longitude: center.y,
+      latitude: latLng.lat(),
+      longitude: latLng.lng(),
       zoom,
     }
   }, [])
