@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import MapSection from '@components/MapSection'
 import Sidebar from '@components/Sidebar'
 import Drawer from '@components/Drawer'
+import DetailStore from '@components/DetailStore'
 
 interface Props {
   stores: Store[]
@@ -20,7 +21,9 @@ export default function Home({ stores }: Props) {
   return (
     <div className="relative w-screen h-screen bg-slate-100">
       <Sidebar />
-      <Drawer>상세 정보</Drawer>
+      <Drawer>
+        <DetailStore />
+      </Drawer>
       <main className="w-full h-full ">
         <MapSection />
       </main>

@@ -12,6 +12,10 @@ export default function MapSection() {
 
   const { setCurrentStore, clearCurrentStore } = useStore()
 
+  const handleMarkerClick = (store: Store) => () => {
+    setCurrentStore(store)
+  }
+
   return (
     <>
       <Map isLoading={!map} clearCurrentStore={clearCurrentStore} />
@@ -19,12 +23,7 @@ export default function MapSection() {
         stores &&
         stores.map((store) => {
           return (
-            <Marker
-              key={store.nid}
-              store={store}
-              map={map}
-              onClick={() => setCurrentStore(store)}
-            />
+            <Marker key={store.nid} store={store} map={map} onClick={handleMarkerClick(store)} />
           )
         })}
       {map && currentStore && (

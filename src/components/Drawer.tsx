@@ -6,9 +6,9 @@ const Drawer: FC<PropsWithChildren> = ({ children }) => {
 
   const classes = {
     active:
-      'absolute top-0 left-[63px] w-[390px] h-screen flex flex-col items-center justify-center bg-white border-[#E37E2E] border-x-[1px] transition-all z-10 ease-linear',
+      'absolute top-0 left-[63px] w-[390px] h-screen bg-white border-[#E37E2E] border-x-[1px] transition-all z-10 ease-linear',
     inactive:
-      'absolute top-0 left-[-327px] w-[390px] h-screen flex flex-col items-center justify-center bg-white transition-all z-10 ease-linear',
+      'absolute top-0 left-[-327px] w-[390px] h-screen bg-white transition-all z-10 ease-linear',
   }
 
   const handleRightArrowClick = () => {
