@@ -48,7 +48,9 @@ const DetailStore = () => {
         </div>
         <div className="flex items-center gap-1 text-sm text-[#00DE5A]">
           <SiNaver size={14} />
-          <Link href={`https://pcmap.place.naver.com/restaurant/${nid}/home`}>네이버 상세정보</Link>
+          <Link href={`https://pcmap.place.naver.com/restaurant/${nid}/home`} target="_blank">
+            네이버 상세정보
+          </Link>
         </div>
       </div>
       <div className="flex flex-col gap-1">
