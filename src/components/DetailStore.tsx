@@ -17,19 +17,20 @@ const DetailStore = () => {
   return (
     <div className="flex flex-col p-4 gap-4">
       <div className="text-lg font-semibold">{name}</div>
-      <div className="flex gap-2 relative max-w-[120px] h-[80px]">
+      <div className="flex gap-2 w-full">
         {images.map((image, index) => (
-          <Image
-            key={image}
-            src={image}
-            className="object-contain"
-            fill
-            sizes="120px"
-            alt={`${name}-${index + 1}`}
-            placeholder="blur"
-            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mO0WhFsDwADzwF2mLYSJgAAAABJRU5ErkJggg=="
-            priority
-          />
+          <div key={image} className="relative w-[120px] h-[80px]">
+            <Image
+              src={image}
+              className="object-cover"
+              fill
+              sizes="120px"
+              alt={`${name}-${index + 1}`}
+              placeholder="blur"
+              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mO0WhFsDwADzwF2mLYSJgAAAABJRU5ErkJggg=="
+              priority
+            />
+          </div>
         ))}
       </div>
       <div>
