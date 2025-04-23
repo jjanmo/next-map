@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import useSWR from 'swr'
 import Map from './Map'
 import { swrKey } from '@constants/swr'
@@ -5,7 +6,11 @@ import { Store } from '@/types/store'
 import Marker from './Marker'
 import useStore from '@hooks/useStore'
 
-export default function MapSection() {
+interface Props {
+  onDrawerToggle: () => void
+}
+
+const MapSection: FC<Props> = ({ onDrawerToggle }) => {
   const { data: stores } = useSWR<Store[]>(swrKey.stores)
   const { data: map } = useSWR<naver.maps.Map>(swrKey.map)
   const { data: currentStore } = useSWR<Store>(swrKey.currentStore)
@@ -14,6 +19,7 @@ export default function MapSection() {
 
   const handleMarkerClick = (store: Store) => () => {
     setCurrentStore(store)
+    onDrawerToggle()
   }
 
   return (
@@ -32,3 +38,5 @@ export default function MapSection() {
     </>
   )
 }
+
+export default MapSection

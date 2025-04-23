@@ -1,7 +1,8 @@
-import { FC, PropsWithChildren, useState } from 'react'
+import { forwardRef, PropsWithChildren, useCallback, useImperativeHandle, useState } from 'react'
 import { FiArrowRight } from 'react-icons/fi'
+import { DrawerRef } from '@/types/store'
 
-const Drawer: FC<PropsWithChildren> = ({ children }) => {
+const Drawer = forwardRef<DrawerRef, PropsWithChildren>(({ children }, ref) => {
   const [isActive, setIsActive] = useState(false)
 
   const classes = {
@@ -11,9 +12,19 @@ const Drawer: FC<PropsWithChildren> = ({ children }) => {
       'absolute top-0 left-[-327px] w-[390px] h-screen bg-white transition-all z-10 ease-linear',
   }
 
-  const handleRightArrowClick = () => {
+  const handleRightArrowClick = useCallback(() => {
     setIsActive(!isActive)
-  }
+  }, [isActive])
+
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        toggle: handleRightArrowClick,
+      }
+    },
+    [handleRightArrowClick]
+  )
 
   return (
     <div className={classes[isActive ? 'active' : 'inactive']}>
@@ -27,6 +38,8 @@ const Drawer: FC<PropsWithChildren> = ({ children }) => {
       </div>
     </div>
   )
-}
+})
+
+Drawer.displayName = 'Drawer'
 
 export default Drawer

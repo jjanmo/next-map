@@ -12,3 +12,7 @@ export interface Store {
   description: string
   menus: { name: string; price: string }[]
 }
+
+export interface DrawerRef {
+  toggle: () => void
+}
