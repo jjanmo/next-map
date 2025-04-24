@@ -5,12 +5,12 @@ import Link from 'next/link'
 import useSWR from 'swr'
 import { CiLocationOn, CiPhone } from 'react-icons/ci'
 import { SiNaver } from 'react-icons/si'
+import EmptyDetail from './EmptyDetail'
 
 const DetailStore = () => {
   const { data: currentStore } = useSWR<Store>(swrKey.currentStore)
 
-  /** @TODO null 대신 현재 선택된 가게가 없을 경우 디폴트 UI */
-  if (!currentStore) return null
+  if (!currentStore) return <EmptyDetail />
 
   const { nid, name, address, phone, menus, images, description } = currentStore
 
