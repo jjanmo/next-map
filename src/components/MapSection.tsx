@@ -7,10 +7,11 @@ import Marker from './Marker'
 import useStore from '@hooks/useStore'
 
 interface Props {
-  onDrawerToggle: () => void
+  onOpenDrawer: () => void
+  onCloseDrawer: () => void
 }
 
-const MapSection: FC<Props> = ({ onDrawerToggle }) => {
+const MapSection: FC<Props> = ({ onOpenDrawer, onCloseDrawer }) => {
   const { data: stores } = useSWR<Store[]>(swrKey.stores)
   const { data: map } = useSWR<naver.maps.Map>(swrKey.map)
   const { data: currentStore } = useSWR<Store>(swrKey.currentStore)
@@ -19,7 +20,12 @@ const MapSection: FC<Props> = ({ onDrawerToggle }) => {
 
   const handleMarkerClick = (store: Store) => () => {
     setCurrentStore(store)
-    onDrawerToggle()
+    onOpenDrawer()
+  }
+
+  const handleMarkerClickForClear = () => {
+    clearCurrentStore()
+    onCloseDrawer()
   }
 
   return (
@@ -33,7 +39,7 @@ const MapSection: FC<Props> = ({ onDrawerToggle }) => {
           )
         })}
       {map && currentStore && (
-        <Marker store={currentStore} map={map} onClick={clearCurrentStore} isSelected />
+        <Marker store={currentStore} map={map} onClick={handleMarkerClickForClear} isSelected />
       )}
     </>
   )
