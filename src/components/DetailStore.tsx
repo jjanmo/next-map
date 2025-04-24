@@ -6,6 +6,8 @@ import useSWR from 'swr'
 import { CiLocationOn, CiPhone } from 'react-icons/ci'
 import { SiNaver } from 'react-icons/si'
 import EmptyDetail from './EmptyDetail'
+import { BsShare } from 'react-icons/bs'
+import { toast } from 'react-toastify'
 
 const DetailStore = () => {
   const { data: currentStore } = useSWR<Store>(swrKey.currentStore)
@@ -14,9 +16,22 @@ const DetailStore = () => {
 
   const { nid, name, address, phone, menus, images, description } = currentStore
 
+  const handleShareBtnClick = () => {
+    navigator.clipboard.writeText(`${location.origin}/${name}`)
+    toast.success('가게 링크가 복사되었어요')
+  }
+
   return (
     <div className="flex flex-col p-4 gap-4">
-      <div className="text-lg font-semibold">{name}</div>
+      <div className="flex items-center justify-between">
+        <div className="text-lg font-semibold">{name}</div>
+        <button
+          className="cursor-pointer rounded active:scale-90 transition transform duration-100"
+          onClick={handleShareBtnClick}
+        >
+          <BsShare size="32" className="p-2 rounded-xl" />
+        </button>
+      </div>
       <div className="flex gap-2 w-full">
         {images.map((image, index) => (
           <div key={image} className="relative w-[120px] h-[80px]">

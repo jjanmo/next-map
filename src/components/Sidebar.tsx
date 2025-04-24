@@ -23,7 +23,7 @@ export default function Sidebar() {
     const { latitude, longitude, zoom } = getMapOption(map)
     const url = `${location.origin}?lat=${latitude}&lng=${longitude}&zoom=${zoom}`
     navigator.clipboard.writeText(url)
-    toast.success('링크가 복사되었어요')
+    toast.success('현재 위치가 복사되었어요')
   }
 
   return (
