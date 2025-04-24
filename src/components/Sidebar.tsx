@@ -9,12 +9,12 @@ import useSWR from 'swr'
 
 export default function Sidebar() {
   const { data: map } = useSWR<naver.maps.Map>(swrKey.map)
-  const { getMapOption, resetMap } = useMap()
+  const { getMapOption, setMap: resetMap } = useMap()
 
   const handleLogoClick = () => {
     if (!map) return
 
-    resetMap(map)
+    resetMap({ map, isReset: true })
   }
 
   const handleShareBtnClick = () => {

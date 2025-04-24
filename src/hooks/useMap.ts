@@ -8,6 +8,7 @@ type Position = {
   longitude: number
 }
 type Params = { position: Position; zoom: number; handler: () => void }
+type SetMapParams = { position?: Position; map: naver.maps.Map; isReset?: boolean }
 
 export default function useMap() {
   const initializeMap = useCallback(({ position, zoom, handler }: Params) => {
@@ -39,15 +40,19 @@ export default function useMap() {
     }
   }, [])
 
-  const resetMap = useCallback((map: naver.maps.Map) => {
+  const setMap = useCallback(({ position, map, isReset = false }: SetMapParams) => {
     if (!map) return
 
-    map.morph(new naver.maps.LatLng(INITIAL_POSITION.LAT, INITIAL_POSITION.LNG), INITIAL_ZOOM)
+    const currentLatitude = position?.latitude || INITIAL_POSITION.LAT
+    const currentLongitude = position?.longitude || INITIAL_POSITION.LNG
+    const currentZoom = isReset ? INITIAL_ZOOM : map.getZoom()
+
+    map.morph(new naver.maps.LatLng(currentLatitude, currentLongitude), currentZoom)
   }, [])
 
   return {
     initializeMap,
     getMapOption,
-    resetMap,
+    setMap,
   }
 }
