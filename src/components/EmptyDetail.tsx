@@ -1,7 +1,22 @@
+import { Store } from '@/types/store'
+import { swrKey } from '@constants/swr'
+import useRandomStore from '@hooks/useRandomStore'
 import { motion } from 'motion/react'
 import { FaMapMarkerAlt } from 'react-icons/fa'
+import useSWR from 'swr'
 
 const EmptyDetail = () => {
+  const { data: stores } = useSWR<Store[]>(swrKey.stores)
+  const { setRandomStore } = useRandomStore()
+
+  const handleIconClick = () => {
+    if (!stores) {
+      return
+    }
+
+    setRandomStore()
+  }
+
   return (
     <div className="relative flex flex-col items-center justify-center p-8 gap-6 h-full overflow-hidden">
       {/* 배경 패턴 */}
@@ -38,9 +53,10 @@ const EmptyDetail = () => {
 
         {/* 마커 아이콘 */}
         <motion.div
-          className="absolute inset-0 flex items-center justify-center"
+          className="absolute inset-0 flex items-center justify-center cursor-pointer"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
+          onClick={handleIconClick}
         >
           <FaMapMarkerAlt size={40} color="#E37E2E" />
         </motion.div>
