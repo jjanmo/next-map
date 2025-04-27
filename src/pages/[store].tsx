@@ -1,12 +1,17 @@
 import { NextPage, GetStaticProps } from 'next'
 import { Store as StoreType } from '@/types/store'
+import DetailStore from '@components/DetailStore'
 
 interface Props {
   store: StoreType
 }
 
 const Store: NextPage<Props> = ({ store }) => {
-  return <div>{store.name} 페이지 입니다.</div>
+  return (
+    <div className="flex flex-col gap-4 max-w-lg h-screen mx-auto bg-[#faf5eb] p-4">
+      <DetailStore store={store} />
+    </div>
+  )
 }
 
 export default Store

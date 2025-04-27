@@ -6,14 +6,18 @@ import MapSection from '@components/MapSection'
 import Sidebar from '@components/Sidebar'
 import Drawer, { DrawerRef } from '@components/Drawer'
 import DetailStore from '@components/DetailStore'
+import useSWR from 'swr'
+import { swrKey } from '@constants/swr'
 
 interface Props {
   stores: Store[]
 }
 
 export default function Home({ stores }: Props) {
-  const { initializeStores } = useStores()
   const drawerRef = useRef<DrawerRef>(null)
+  const { data: currentStore } = useSWR<Store>(swrKey.currentStore)
+
+  const { initializeStores } = useStores()
 
   useEffect(() => {
     initializeStores(stores)
@@ -31,7 +35,7 @@ export default function Home({ stores }: Props) {
     <div className="relative w-screen h-screen bg-slate-100">
       <Sidebar />
       <Drawer ref={drawerRef}>
-        <DetailStore />
+        <DetailStore store={currentStore} />
       </Drawer>
       <main className="w-full h-full ">
         <MapSection onOpenDrawer={handleDrawerOpen} onCloseDrawer={handleDrawerClose} />
