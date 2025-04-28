@@ -8,6 +8,7 @@ import Drawer, { DrawerRef } from '@components/Drawer'
 import DetailStore from '@components/DetailStore'
 import useSWR from 'swr'
 import { swrKey } from '@constants/swr'
+import useMediaQuery from '@hooks/useMediaQuery'
 
 interface Props {
   stores: Store[]
@@ -33,10 +34,16 @@ export default function Home({ stores }: Props) {
 
   return (
     <div className="relative w-screen h-screen bg-slate-100">
-      <Sidebar />
-      <Drawer ref={drawerRef}>
-        <DetailStore store={currentStore} />
-      </Drawer>
+      {useMediaQuery('(max-width: 768px)') ? (
+        <div>헤더 자리</div>
+      ) : (
+        <>
+          <Sidebar />
+          <Drawer ref={drawerRef}>
+            <DetailStore store={currentStore} />
+          </Drawer>
+        </>
+      )}
       <main className="w-full h-full ">
         <MapSection onOpenDrawer={handleDrawerOpen} onCloseDrawer={handleDrawerClose} />
       </main>
