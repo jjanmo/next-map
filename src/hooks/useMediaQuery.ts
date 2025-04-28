@@ -1,29 +1,33 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
+import { BREAKPOINTS } from '@constants/mediaQuery'
 
-const useMediaQuery = (query: string) => {
-  const [matches, setMatches] = useState(false)
+const useMediaQuery = () => {
+  const [isMobile, setIsMobile] = useState(false)
+  const [isTablet, setIsTablet] = useState(false)
+  const [isDesktop, setIsDesktop] = useState(false)
+  const observerRef = useRef<ResizeObserver | null>(null)
 
   useEffect(() => {
-    const media = window.matchMedia(query)
-
-    // 초기 상태 설정
-    setMatches(media.matches)
-
-    // 미디어 쿼리 변경 감지
-    const listener = (e: MediaQueryListEvent) => {
-      setMatches(e.matches)
+    const updateMatches = () => {
+      const width = window.innerWidth
+      setIsMobile(width <= BREAKPOINTS.MOBILE)
+      setIsTablet(width > BREAKPOINTS.MOBILE && width <= BREAKPOINTS.TABLET)
+      setIsDesktop(width >= BREAKPOINTS.DESKTOP)
     }
 
-    // 이벤트 리스너 추가
-    media.addEventListener('change', listener)
+    updateMatches()
 
-    // 클린업 함수
+    observerRef.current = new ResizeObserver(updateMatches)
+    observerRef.current.observe(document.documentElement)
+
     return () => {
-      media.removeEventListener('change', listener)
+      if (observerRef.current) {
+        observerRef.current.disconnect()
+      }
     }
-  }, [query])
+  }, [])
 
-  return matches
+  return { isMobile, isTablet, isDesktop }
 }
 
 export default useMediaQuery

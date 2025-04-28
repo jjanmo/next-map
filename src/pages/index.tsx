@@ -20,6 +20,8 @@ export default function Home({ stores }: Props) {
 
   const { initializeStores } = useStores()
 
+  const { isMobile } = useMediaQuery()
+
   useEffect(() => {
     initializeStores(stores)
   }, [initializeStores, stores])
@@ -34,7 +36,7 @@ export default function Home({ stores }: Props) {
 
   return (
     <div className="relative w-screen h-screen bg-slate-100">
-      {useMediaQuery('(max-width: 768px)') ? (
+      {isMobile ? (
         <div>헤더 자리</div>
       ) : (
         <>
