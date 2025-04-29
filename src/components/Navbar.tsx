@@ -1,5 +1,6 @@
 import { swrKey } from '@constants/swr'
 import useMap from '@hooks/useMap'
+import useMediaQuery from '@hooks/useMediaQuery'
 import Image from 'next/image'
 import Link from 'next/link'
 import { BsShare } from 'react-icons/bs'
@@ -7,9 +8,10 @@ import { VscFeedback } from 'react-icons/vsc'
 import { toast } from 'react-toastify'
 import useSWR from 'swr'
 
-export default function Sidebar() {
+export default function Navbar() {
   const { data: map } = useSWR<naver.maps.Map>(swrKey.map)
   const { getMapOption, setMap: resetMap } = useMap()
+  const { isMobile } = useMediaQuery()
 
   const handleLogoClick = () => {
     if (!map) return
@@ -24,6 +26,31 @@ export default function Sidebar() {
     const url = `${location.origin}?lat=${latitude}&lng=${longitude}&zoom=${zoom}`
     navigator.clipboard.writeText(url)
     toast.success('현재 위치가 복사되었어요')
+  }
+
+  if (isMobile) {
+    return (
+      <header className="w-full h-12 flex absolute top-0 left-0 z-20 bg-[#FDF7E9] shadow-md">
+        <div className="w-full flex justify-between items-center">
+          <Link
+            href="/"
+            className="flex justify-center items-center relative w-12 h-12"
+            onClick={handleLogoClick}
+          >
+            <Image src={'/logo.png'} priority fill alt="logo" />
+          </Link>
+
+          <div className="flex gap-4 pr-4">
+            <button title="링크 공유">
+              <BsShare size="32" color="white" className="p-2 rounded-xl bg-[#E37E2E]" />
+            </button>
+            <Link href="feedback" title="피드백" onClick={handleShareBtnClick}>
+              <VscFeedback size="32" color="white" className="p-2 rounded-xl bg-[#E37E2E]" />
+            </Link>
+          </div>
+        </div>
+      </header>
+    )
   }
 
   return (

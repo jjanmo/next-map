@@ -3,13 +3,12 @@ import axios from 'axios'
 import useStores from '@hooks/useStores'
 import { Store } from '@/types/store'
 import MapSection from '@components/MapSection'
-import Sidebar from '@components/Sidebar'
 import Drawer, { DrawerRef } from '@components/Drawer'
 import DetailStore from '@components/DetailStore'
 import useSWR from 'swr'
 import { swrKey } from '@constants/swr'
+import Navbar from '@components/Navbar'
 import useMediaQuery from '@hooks/useMediaQuery'
-
 interface Props {
   stores: Store[]
 }
@@ -19,8 +18,7 @@ export default function Home({ stores }: Props) {
   const { data: currentStore } = useSWR<Store>(swrKey.currentStore)
 
   const { initializeStores } = useStores()
-
-  const { isMobile } = useMediaQuery()
+  const { isDesktop } = useMediaQuery()
 
   useEffect(() => {
     initializeStores(stores)
@@ -36,16 +34,14 @@ export default function Home({ stores }: Props) {
 
   return (
     <div className="relative w-screen h-screen bg-slate-100">
-      {isMobile ? (
-        <div>헤더 자리</div>
-      ) : (
-        <>
-          <Sidebar />
-          <Drawer ref={drawerRef}>
-            <DetailStore store={currentStore} />
-          </Drawer>
-        </>
+      <Navbar />
+
+      {isDesktop && (
+        <Drawer ref={drawerRef}>
+          <DetailStore store={currentStore} />
+        </Drawer>
       )}
+
       <main className="w-full h-full ">
         <MapSection onOpenDrawer={handleDrawerOpen} onCloseDrawer={handleDrawerClose} />
       </main>
