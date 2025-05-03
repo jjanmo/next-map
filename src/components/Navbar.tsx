@@ -37,7 +37,7 @@ export default function Navbar() {
             className="flex justify-center items-center relative w-12 h-12"
             onClick={handleLogoClick}
           >
-            <Image src={'/logo.png'} priority fill alt="logo" />
+            <Image src={'/logo.png'} priority fill sizes="48px" alt="logo" />
           </Link>
 
           <div className="flex gap-4 pr-4">
@@ -59,10 +59,10 @@ export default function Navbar() {
         <li className="my-4">
           <Link
             href="/"
-            className="flex justify-center items-center relative w-16 h-16 "
+            className="flex justify-center items-center relative w-16 h-16"
             onClick={handleLogoClick}
           >
-            <Image src={'/logo.png'} priority fill alt="logo" />
+            <Image src={'/logo.png'} priority fill sizes="64px" alt="logo" />
           </Link>
         </li>
         <li>
