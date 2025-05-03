@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import useStores from '@hooks/useStores'
 import { Store } from '@/types/store'
 import MapSection from '@components/MapSection'
@@ -50,11 +50,22 @@ export default function Home({ stores }: Props) {
 }
 
 export async function getStaticProps() {
-  const response = await axios.get<{ stores: Store[] }>(`${process.env.NEXT_API_URL}/api/stores`)
+  try {
+    const response = await axios.get(`${process.env.NEXT_API_URL}/api/stores`)
+    return {
+      props: {
+        stores: response.data.stores,
+      },
+    }
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error(`오류 코드: ${error.code}, 메시지: ${error.message}`)
+    } else {
+      console.error('오류 타입:', error)
+    }
 
-  return {
-    props: {
-      stores: response.data.stores,
-    },
+    return {
+      notFound: true,
+    }
   }
 }
