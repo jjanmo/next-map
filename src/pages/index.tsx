@@ -9,6 +9,7 @@ import useSWR from 'swr'
 import { swrKey } from '@constants/swr'
 import Navbar from '@components/Navbar'
 import useMediaQuery from '@hooks/useMediaQuery'
+import BottomSheet from '@components/BottomSheet'
 interface Props {
   stores: Store[]
 }
@@ -33,17 +34,17 @@ export default function Home({ stores }: Props) {
   }, [drawerRef])
 
   return (
-    <div className="relative w-screen h-screen bg-slate-100">
+    <div className="relative w-screen h-screen bg-slate-100 overflow-hidden">
       <Navbar />
 
-      {isDesktop && (
-        <Drawer ref={drawerRef}>
-          <DetailStore store={currentStore} />
-        </Drawer>
-      )}
-
       <main className="w-full h-full ">
+        {isDesktop && (
+          <Drawer ref={drawerRef}>
+            <DetailStore store={currentStore} />
+          </Drawer>
+        )}
         <MapSection onOpenDrawer={handleDrawerOpen} onCloseDrawer={handleDrawerClose} />
+        {!isDesktop && <BottomSheet />}
       </main>
     </div>
   )
