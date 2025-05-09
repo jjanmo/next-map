@@ -16,7 +16,7 @@ const BottomSheet = () => {
   const [isFullPage, setIsFullPage] = useState(false)
   const { data: currentStore } = useSWR<Store>(swrKey.currentStore)
 
-  const storeName = currentStore?.name || <div className="pt-3">매장을 선택해주세요</div>
+  const storeName = currentStore?.name || '매장을 선택해주세요'
   const borderRadiusStyle = {
     default: 'rounded-t-3xl',
     fullPage: 'rounded-t-none',
@@ -57,8 +57,8 @@ const BottomSheet = () => {
         </div>
       )}
 
-      <div className="w-full text-left flex justify-between items-center">
-        <span>{storeName}</span>
+      <div className="w-full h-[62px] text-left flex justify-between items-center">
+        <div className="h-full flex items-center">{storeName}</div>
         {currentStore && (
           <button
             className="rounded active:scale-90 transition transform duration-100 cursor-pointer"

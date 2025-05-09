@@ -30,21 +30,21 @@ export default function Navbar() {
 
   if (isMobile) {
     return (
-      <header className="w-full h-12 flex absolute top-0 left-0 z-20 bg-[#FDF7E9] shadow-md">
+      <header className="w-full h-12 flex absolute top-0 left-0 z-20 bg-white shadow-md">
         <div className="w-full flex justify-between items-center">
           <Link
             href="/"
-            className="flex justify-center items-center relative w-12 h-12"
+            className="flex justify-center items-center relative w-[54px] h-[50px]"
             onClick={handleLogoClick}
           >
             <Image src={'/logo.png'} priority fill sizes="48px" alt="logo" />
           </Link>
 
           <div className="flex gap-4 pr-4">
-            <button title="링크 공유">
+            <button title="링크 공유" onClick={handleShareBtnClick}>
               <BsShare size="32" color="white" className="p-2 rounded-xl bg-[#E37E2E]" />
             </button>
-            <Link href="feedback" title="피드백" onClick={handleShareBtnClick}>
+            <Link href="feedback" title="피드백">
               <VscFeedback size="32" color="white" className="p-2 rounded-xl bg-[#E37E2E]" />
             </Link>
           </div>
